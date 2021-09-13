@@ -1,0 +1,6 @@
+# This line is a comment
+# This file has a scalar (123), and a 2 x 3 matrix (elements 1 ... 6)
+123
+2 3
+1,2,3,
+4,5,6,
