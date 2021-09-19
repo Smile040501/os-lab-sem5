@@ -96,17 +96,18 @@ void output::performOperations(const std::vector<char> &args, const std::vector<
                 if (first) {  // if we are processing the very first argument
                     assertIndexBounds(order, k, 1);
                     if (order[k] == constants::SCALAR_SYMBOL && order[k + 1] == constants::SCALAR_SYMBOL) {  // both are scalars
-                        assertIndexBounds(scalars, j, 1);
-                        if (option == constants::DIV_ARG && scalars[j + 1] == 0) throw DivideByZeroException();
+                        throw UnsupportedOperationException();
+                        // assertIndexBounds(scalars, j, 1);
+                        // if (option == constants::DIV_ARG && scalars[j + 1] == 0) throw DivideByZeroException();
 
-                        currentMat = false;
-                        evaluate(scalars[j], scalars[j + 1], option, scalarResult);
-                        j += 2;
+                        // currentMat = false;
+                        // evaluate(scalars[j], scalars[j + 1], option, scalarResult);
+                        // j += 2;
 
-                        //! Logging logic starts
-                        *logger << util::getLogString(__FILE__, __LINE__) << getOperationLogString(option) << " two scalars: " << scalars[j - 2] << " and " << scalars[j - 1] << "\n";
-                        *logger << "Result: " << scalarResult << "\n";
-                        //! Logging logic ends
+                        // //! Logging logic starts
+                        // *logger << util::getLogString(__FILE__, __LINE__) << getOperationLogString(option) << " two scalars: " << scalars[j - 2] << " and " << scalars[j - 1] << "\n";
+                        // *logger << "Result: " << scalarResult << "\n";
+                        // //! Logging logic ends
 
                     } else if (order[k] == constants::MATRIX_SYMBOL && order[k + 1] == constants::MATRIX_SYMBOL) {  // both are matrices
                         assertIndexBounds(matrices, i, 1);
@@ -161,14 +162,15 @@ void output::performOperations(const std::vector<char> &args, const std::vector<
                             //! Logging logic ends
 
                         } else {
-                            if (option == constants::DIV_ARG && scalars[j] == 0) throw DivideByZeroException();
-                            ll prevScalarResult = scalarResult;  //! Logging logic
-                            evaluate(scalarResult, scalars[j], option, scalarResult);
+                            throw UnsupportedOperationException();
+                            // if (option == constants::DIV_ARG && scalars[j] == 0) throw DivideByZeroException();
+                            // ll prevScalarResult = scalarResult;  //! Logging logic
+                            // evaluate(scalarResult, scalars[j], option, scalarResult);
 
-                            //! Logging logic starts
-                            *logger << util::getLogString(__FILE__, __LINE__) << getOperationLogString(option) << " two scalars: " << prevScalarResult << " and " << scalars[j] << "\n";
-                            *logger << "Result: " << scalarResult << "\n";
-                            //! Logging logic ends
+                            // //! Logging logic starts
+                            // *logger << util::getLogString(__FILE__, __LINE__) << getOperationLogString(option) << " two scalars: " << prevScalarResult << " and " << scalars[j] << "\n";
+                            // *logger << "Result: " << scalarResult << "\n";
+                            // //! Logging logic ends
                         }
                         ++j;
                     } else {
