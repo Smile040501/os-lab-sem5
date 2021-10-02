@@ -286,7 +286,7 @@ void output::performOperations(const std::vector<char> &args, const std::vector<
     }
 
     if (currentMat) {
-        std::cout << matrixResult << std::endl;
+        std::cout << matrixResult;
     } else {
         std::cout << scalarResult << std::endl;
     }
