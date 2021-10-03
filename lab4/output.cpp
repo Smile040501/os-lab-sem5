@@ -6,6 +6,7 @@
 
 #include "Logger.h"
 #include "Matrix.h"
+#include "Scalar.h"
 #include "constants.h"
 #include "exceptions.h"
 #include "utils.h"
@@ -64,7 +65,7 @@ void output::evaluate(T1 &val1, T2 &val2, char option, T3 &val3) {
 }
 
 // Function that performs operations in the order in which command line arguments are specified
-void output::performOperations(const std::vector<char> &args, const std::vector<Matrix> &matrices, const std::vector<ll> &scalars, const std::string &order) {
+void output::performOperations(const std::vector<char> &args, const std::vector<Matrix> &matrices, const std::vector<Scalar> &scalars, const std::string &order) {
     // if no argument is specified
     if (args.size() == 0) {
         if (order.length() != 0) throw NoArgumentsException();
@@ -79,7 +80,7 @@ void output::performOperations(const std::vector<char> &args, const std::vector<
     ll i = 0, j = 0, k = 0;
 
     // result of last computation if it was a scalar result
-    ll scalarResult = 0;
+    Scalar scalarResult(0);
 
     // result of last computation if it was a matrix result
     Matrix matrixResult(1, 1);
@@ -131,7 +132,7 @@ void output::performOperations(const std::vector<char> &args, const std::vector<
                         assertIndexBounds(matrices, i);
                         assertIndexBounds(scalars, j);
                         currentMat = true;
-                        evaluate(matrices[i], scalars[j], option, matrixResult);
+                        evaluate(scalars[j], matrices[i], option, matrixResult);
                         ++i;
                         ++j;
 
@@ -151,7 +152,7 @@ void output::performOperations(const std::vector<char> &args, const std::vector<
                         assertIndexBounds(scalars, j);
                         if (currentMat) {
                             Matrix prevMatrixResult = matrixResult;  //! Logging logic
-                            evaluate(matrixResult, scalars[j], option, matrixResult);
+                            evaluate(scalars[j], matrixResult, option, matrixResult);
 
                             //! Logging logic starts
                             *logger << util::getLogString(__FILE__, __LINE__) << getOperationLogString(option) << " a scalar and a matrix: " << scalars[j] << " and ";
@@ -191,7 +192,7 @@ void output::performOperations(const std::vector<char> &args, const std::vector<
                             //! Logging logic ends
 
                         } else {
-                            evaluate(matrices[i], scalarResult, option, matrixResult);
+                            evaluate(scalarResult, matrices[i], option, matrixResult);
                             currentMat = true;
 
                             //! Logging logic starts

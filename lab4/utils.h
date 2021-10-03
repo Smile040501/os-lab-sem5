@@ -32,6 +32,9 @@ std::string getLogString(const char *filename, int lineNum);
 // Function to log the vector<ll> (array) to the log file
 void logArray(Logger *logger, const std::vector<ll> &arr);
 
+// Function to log the vector<Scalar> (array) to the log file
+void logArray(Logger *logger, const std::vector<Scalar> &arr);
+
 // Function to log the matrix to the log file
 void logMatrix(Logger *logger, const Matrix &mat);
 

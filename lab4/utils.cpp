@@ -77,6 +77,16 @@ void util::logArray(Logger *logger, const std::vector<ll> &arr) {
     *logger << " }";
 }
 
+// Function to log the vector<Scalar> (array) to the log file
+void util::logArray(Logger *logger, const std::vector<Scalar> &arr) {
+    *logger << "{ ";
+    for (ll i = 0; i < arr.size(); ++i) {
+        *logger << arr[i];
+        if (i != arr.size() - 1) *logger << ", ";
+    }
+    *logger << " }";
+}
+
 // Function to log the matrix to the log file
 void util::logMatrix(Logger *logger, const Matrix &mat) {
     *logger << "[ ";

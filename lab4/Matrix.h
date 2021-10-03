@@ -4,7 +4,12 @@
 #include <iostream>
 #include <vector>
 
+#include "Scalar.h"
+
 using ll = long long;
+
+// To remove cyclic dependecy of header files
+class Scalar;
 
 // Matrix class to represent a matrix
 class Matrix {
@@ -26,16 +31,13 @@ class Matrix {
     int getColumns() const noexcept;
     std::vector<std::vector<ll>> getMatrix() const noexcept;
 
+    // Setters
+    void setVal(ll i, ll j, ll val);
+
     // Overloaded operators
     // Default overloaded assignment operator
     Matrix &operator=(const Matrix &mat) = default;
     Matrix &operator=(Matrix &&mat) = default;
-
-    // Scalar Operations
-    Matrix operator+(ll val) const noexcept;
-    Matrix operator-(ll val) const noexcept;
-    Matrix operator*(ll val) const noexcept;
-    Matrix operator/(ll val) const;
 
     // Matrix Operations
     Matrix operator+(const Matrix &mat) const;
@@ -47,7 +49,7 @@ class Matrix {
     Matrix transpose() const noexcept;
 
     // Function to get the determinant of the matrix
-    ll determinant() const;
+    Scalar determinant() const;
 
     // Making overloaded stream insertion and extraction operator as friend functions
     friend std::ostream &operator<<(std::ostream &os, const Matrix &mat);

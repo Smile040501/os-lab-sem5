@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Matrix.h"
+#include "Scalar.h"
 
 using ll = long long;
 
@@ -13,7 +14,7 @@ namespace input {
 void parseArgs(int argc, char **argv, std::vector<char> &args);
 
 // Function to handle the input which reads an input file as per the input format
-void handleInput(std::vector<Matrix> &matrices, std::vector<ll> &scalars, std::string &order);
+void handleInput(std::vector<Matrix> &matrices, std::vector<Scalar> &scalars, std::string &order);
 
 }  // namespace input
 

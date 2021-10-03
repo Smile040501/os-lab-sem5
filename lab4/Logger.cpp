@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 
+#include "Scalar.h"
 #include "constants.h"
 #include "exceptions.h"
 
@@ -68,6 +69,15 @@ Logger& operator<<(Logger& logger, const char& c) {
 Logger& operator<<(Logger& logger, const std::string& str) {
     if (Logger::file.is_open()) {
         Logger::file << str;
+    } else {
+        throw FileNotFoundException();
+    }
+    return logger;
+}
+
+Logger& operator<<(Logger& logger, const Scalar& val) {
+    if (Logger::file.is_open()) {
+        Logger::file << val.getVal();
     } else {
         throw FileNotFoundException();
     }

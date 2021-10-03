@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Matrix.h"
+#include "Scalar.h"
 
 using ll = long long;
 
@@ -18,7 +19,7 @@ template <typename T1, typename T2, typename T3>
 void evaluate(T1 &val1, T2 &val2, char option, T3 &val3);
 
 // Function that performs operations in the order in which command line arguments are specified
-void performOperations(const std::vector<char> &args, const std::vector<Matrix> &matrices, const std::vector<ll> &scalars, const std::string &order);
+void performOperations(const std::vector<char> &args, const std::vector<Matrix> &matrices, const std::vector<Scalar> &scalars, const std::string &order);
 
 }  // namespace output
 

@@ -2,6 +2,7 @@
 
 #include <sstream>
 
+#include "Scalar.h"
 #include "constants.h"
 #include "exceptions.h"
 #include "utils.h"
@@ -21,7 +22,7 @@ Matrix::Matrix(ll rows, ll columns)
 }
 
 // Destructor
-Matrix ::~Matrix() noexcept {
+Matrix::~Matrix() noexcept {
 }
 
 // Getters
@@ -37,66 +38,15 @@ std::vector<std::vector<ll>> Matrix::getMatrix() const noexcept {
     return this->matrix;
 }
 
+// Setters
+void Matrix::setVal(ll i, ll j, ll val) {
+    if (i < 0 || i >= this->rows || j < 0 || j >= this->columns) {
+        throw OutOfBoundsException();
+    }
+    this->matrix[i][j] = val;
+}
+
 // Overloaded operators
-
-// Scalar Operations
-
-// Adds the scalar value to all the values in the matrix and returns the new matrix
-Matrix Matrix::operator+(ll val) const noexcept {
-    Matrix result(this->rows, this->columns);
-
-    for (ll i = 0; i < this->rows; ++i) {
-        for (ll j = 0; j < this->columns; ++j) {
-            result.matrix[i][j] = this->matrix[i][j] + val;
-        }
-    }
-
-    return result;
-}
-
-// Subtracts the scalar value from all the values in the matrix and returns the new matrix
-Matrix Matrix::operator-(ll val) const noexcept {
-    Matrix result(this->rows, this->columns);
-
-    for (ll i = 0; i < this->rows; ++i) {
-        for (ll j = 0; j < this->columns; ++j) {
-            result.matrix[i][j] = this->matrix[i][j] - val;
-        }
-    }
-
-    return result;
-}
-
-// Multiplies the scalar value with all the values in the matrix and returns the new matrix
-Matrix Matrix::operator*(ll val) const noexcept {
-    Matrix result(this->rows, this->columns);
-
-    for (ll i = 0; i < this->rows; ++i) {
-        for (ll j = 0; j < this->columns; ++j) {
-            result.matrix[i][j] = this->matrix[i][j] * val;
-        }
-    }
-
-    return result;
-}
-
-// Divides the scalar value with all the values in the matrix and returns the new matrix
-Matrix Matrix::operator/(ll val) const {
-    // Division by zero is not allowed
-    if (val == 0) {
-        throw DivideByZeroException();
-    }
-
-    Matrix result(this->rows, this->columns);
-
-    for (ll i = 0; i < this->rows; ++i) {
-        for (ll j = 0; j < this->columns; ++j) {
-            result.matrix[i][j] = this->matrix[i][j] / val;
-        }
-    }
-
-    return result;
-}
 
 // Matrix Operations
 
@@ -243,19 +193,19 @@ ll Matrix::determinant(const std::vector<std::vector<ll>> &mat, ll n) const {
 }
 
 // Function to get the determinant of the matrix
-ll Matrix::determinant() const {
+Scalar Matrix::determinant() const {
     // Determinant can only be evaluated for square matrices
     if (this->rows != this->columns) {
         throw NonSquareMatrixException();
     }
 
-    return determinant(this->matrix, this->rows);
+    return Scalar(determinant(this->matrix, this->rows));
 }
 
 // Overloaded stream insertion operator for the Matrix class
 std::ostream &operator<<(std::ostream &os, const Matrix &mat) {
     // Printing in the desired format as specified
-    os << mat.getRows() << " " << mat.getColumns() << std::endl;
+    os << mat.rows << " " << mat.columns << std::endl;
     for (ll i = 0; i < mat.rows; ++i) {
         for (ll j = 0; j < mat.columns; ++j) {
             os << mat.matrix[i][j] << ',';

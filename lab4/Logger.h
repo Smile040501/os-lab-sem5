@@ -4,6 +4,8 @@
 #include <fstream>
 #include <string>
 
+#include "Scalar.h"
+
 using ll = long long;
 
 // Singleton class Logger
@@ -31,6 +33,7 @@ class Logger {
     friend Logger &operator<<(Logger &logger, ll num);
     friend Logger &operator<<(Logger &logger, const char &c);
     friend Logger &operator<<(Logger &logger, const std::string &str);
+    friend Logger &operator<<(Logger &logger, const Scalar &val);
 
    private:
     // Logger class object pointer
@@ -53,6 +56,7 @@ class Logger {
 Logger &operator<<(Logger &logger, ll num);
 Logger &operator<<(Logger &logger, const char &c);
 Logger &operator<<(Logger &logger, const std::string &str);
+Logger &operator<<(Logger &logger, const Scalar &val);
 
 //~ Idea of this class taken from the link provided in the question and the question suggested to look at them.
 //~ https://cppcodetips.wordpress.com/2014/01/02/a-simple-logger-class-in-c/

@@ -5,6 +5,7 @@
 
 #include "Logger.h"
 #include "Matrix.h"
+#include "Scalar.h"
 #include "exceptions.h"
 #include "input.h"
 #include "output.h"
@@ -16,6 +17,7 @@ using ll = long long;
 // __LINE__ : in-built in C++ to get the current line number
 
 int main(int argc, char **argv) {
+    Scalar test();
     // Logger object pointer to write debug/error messages to log file
     Logger *logger = nullptr;
     try {
@@ -29,7 +31,7 @@ int main(int argc, char **argv) {
         input::parseArgs(argc, argv, args);  // Parsing arguments received from command line
 
         std::vector<Matrix> matrices{};  // Storing all the matrices received from input
-        std::vector<ll> scalars{};       // Storing all the scalars received from input
+        std::vector<Scalar> scalars{};   // Storing all the scalars received from input
         std::string order = "";          // Keep track of order of matrices and scalars in input
 
         input::handleInput(matrices, scalars, order);  // Parsing input

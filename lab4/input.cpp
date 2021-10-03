@@ -9,6 +9,7 @@
 
 #include "Logger.h"
 #include "Matrix.h"
+#include "Scalar.h"
 #include "constants.h"
 #include "exceptions.h"
 #include "utils.h"
@@ -47,7 +48,7 @@ void input::parseArgs(int argc, char **argv, std::vector<char> &args) {
 }
 
 // Function to handle the input which reads an input file as per the input format
-void input::handleInput(std::vector<Matrix> &matrices, std::vector<ll> &scalars, std::string &order) {
+void input::handleInput(std::vector<Matrix> &matrices, std::vector<Scalar> &scalars, std::string &order) {
     std::string line = "";
     while (std::getline(std::cin, line)) {
         // trimming the input line
@@ -59,7 +60,7 @@ void input::handleInput(std::vector<Matrix> &matrices, std::vector<ll> &scalars,
             }
 
             if (!util::hasDimensions(line)) {
-                scalars.emplace_back(std::stoll(line));
+                scalars.emplace_back(Scalar(std::stoll(line)));
                 order += constants::SCALAR_SYMBOL;
             } else {
                 std::stringstream ss(line);
