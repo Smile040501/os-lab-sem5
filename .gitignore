@@ -11,6 +11,10 @@ driver
 # Ideas/Notes
 .notes
 
+# binaries and build files
+bin/
+build/
+
 # Node artifact files
 node_modules/
 dist/
