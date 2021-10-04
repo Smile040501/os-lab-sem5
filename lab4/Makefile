@@ -19,6 +19,7 @@ vpath %.h $(INCLUDEDIR)
 all: build
 	@echo "Success"
 
+.PHONY: build
 build: $(BUILDDIR)/main_static.o $(BUILDDIR)/input_static.o $(BUILDDIR)/output_static.o $(LIBS) | $(BINDIR)
 	g++ -o $(EXE) -I $(INCLUDEDIR) $< $(word 2, $^) $(word 3, $^) -L lib -lscalar -lmatrix
 
@@ -40,6 +41,7 @@ $(BINDIR) $(LIBDIR):
 MKDIR_BUILD:
 	mkdir -p build
 
+.PHONY: libs
 libs: $(LIBS)
 
 .PHONY: clean
