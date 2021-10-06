@@ -6,6 +6,8 @@ TESTSDIR := tests
 BUILDDIR := build
 MKDIR := MKDIR_
 
+LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(PWD)/$(LIBDIR)/
+
 EXE := $(BINDIR)/lab
 HEADERS := $(wildcard $(INCLUDEDIR)/*.h)
 
