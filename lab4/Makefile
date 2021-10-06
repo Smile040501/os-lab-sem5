@@ -35,30 +35,30 @@ vpath %.cpp $(SRCDIR)
 vpath %.h $(INCLUDEDIR)
 
 all: build
-	@echo "Success"
 
 .PHONY: build
 build: $(BUILDDIR)/main_static.o $(BUILDDIR)/input_static.o $(BUILDDIR)/output_static.o $(LIBS) | $(MKDIR)$(BINDIR)
-	g++ -o $(EXE) -I $(INCLUDEDIR) $< $(word 2,$^) $(word 3,$^) -L lib -lscalar -lmatrix
+	@g++ -o $(EXE) -I $(INCLUDEDIR) $< $(word 2,$^) $(word 3,$^) -L lib -lscalar -lmatrix
+	@echo "Build Successfull!"
 
 #! Not working approach...
 # $(BUILDDIR)/%_static.o $(BUILDDIR)/%_dynamic.o: %.cpp $(HEADERS) | MKDIR_BUILD
 # 	g++ -o $@ -c -I $(INCLUDEDIR) $< $(if $(filter %_dynamic.o,$@),-fPIC,)
 
 $(BUILDDIR)/%_static.o: %.cpp $(HEADERS) | $(MKDIR)$(BUILDDIR)
-	g++ -o $@ -c -I $(INCLUDEDIR) $<
+	@g++ -o $@ -c -I $(INCLUDEDIR) $<
 
 $(BUILDDIR)/%_dynamic.o: %.cpp $(HEADERS) | $(MKDIR)$(BUILDDIR)
-	g++ -o $@ -c -I $(INCLUDEDIR) $< -fPIC
+	@g++ -o $@ -c -I $(INCLUDEDIR) $< -fPIC
 
 $(LIBDIR)/libscalar.a: $(SCALAR_DEPENDENCIES) | $(MKDIR)$(LIBDIR)
-	ar rcs $@ $^
+	@ar rcs $@ $^
 
 $(LIBDIR)/libmatrix.so: $(MATRIX_DEPENDENCIES) | $(MKDIR)$(LIBDIR)
-	g++ -shared -o $@ $^
+	@g++ -shared -o $@ $^
 
 $(MKDIR)%:
-	mkdir -p $(patsubst $(MKDIR)%,%,$@)
+	@mkdir -p $(patsubst $(MKDIR)%,%,$@)
 
 .PHONY: libs
 libs: $(LIBS)
@@ -66,16 +66,16 @@ libs: $(LIBS)
 #! Remember to use `@` wherever possible
 .PHONY: prepare
 prepare: | $(MKDIR)$(BUILDDIR)
-	read -p "Enter the path to the input file: " input_file;\
+	@read -p "Enter the path to the input file: " input_file;\
 	echo $$input_file > $(INPUT_FILENAME_STORE)
-	read -p "Enter the path to the output file: " output_file;\
+	@read -p "Enter the path to the output file: " output_file;\
 	echo $$output_file > $(OUTPUT_FILENAME_STORE)
-	read -p "Enter the command line arguments for the program: " args;\
+	@read -p "Enter the command line arguments for the program: " args;\
 	echo $$args > $(ARGS_STORE)
  
 .PHONY: run
 run: | build
-	if [ -s $(INPUT_FILENAME_STORE) ]; then\
+	@if [ -s $(INPUT_FILENAME_STORE) ]; then\
 		input_file=$$(cat $(INPUT_FILENAME_STORE));\
 	else\
 		input_file=$(DEFAULT_INPUT_FILE);\
@@ -94,11 +94,11 @@ run: | build
 tests: $(TESTS)
 
 test%: $(TESTSDIR)/test%.in $(TESTSDIR)/test%.out | build
-	$(EXE) -$(TEST$(patsubst test%,%,$@)ARGS) < $< > $(BUILDDIR)/test.out
-	-diff $(word 2, $^) $(BUILDDIR)/test.out > $(BUILDDIR)/test.log
-	[ -s $(BUILDDIR)/test.log ] && echo "Test $(patsubst test%,%,$@) Failed :(" || echo "Test $(patsubst test%,%,$@) Passed :)"
-	rm -rf $(BUILDDIR)/test.out $(BUILDDIR)/test.log
+	@$(EXE) -$(TEST$(patsubst test%,%,$@)ARGS) < $< > $(BUILDDIR)/test.out
+	@-diff $(word 2, $^) $(BUILDDIR)/test.out > $(BUILDDIR)/test.log
+	@[ -s $(BUILDDIR)/test.log ] && echo "Test $(patsubst test%,%,$@) Failed :(" || echo "Test $(patsubst test%,%,$@) Passed :)"
+	@rm -rf $(BUILDDIR)/test.out $(BUILDDIR)/test.log
 
 .PHONY: clean
 clean:
-	rm -rf $(BINDIR) $(BUILDDIR) $(LIBDIR)
+	@rm -rf $(BINDIR) $(BUILDDIR) $(LIBDIR)
