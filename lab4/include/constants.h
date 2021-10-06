@@ -20,7 +20,8 @@ const char DETERMINANT_ARG = 'x';
 const char INVALID_ARG = '?';
 const char *const ALLOWED_ARGS = ":asmdtx";
 
-const std::string LOG_FILE = "messages.log";
+// This path is with respect to the `Makefile` present in the root directory
+const std::string LOG_FILE = "./build/messages.log";
 }  // namespace constants
 
 #endif  // _CONSTANTS_H_
