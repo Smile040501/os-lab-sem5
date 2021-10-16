@@ -3,18 +3,6 @@
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
-# Executables
-# Lab 2
-iecho
-driver
-
-# Ideas/Notes
-.notes
-
-# binaries and build files
-bin/
-build/
-
 # Node artifact files
 node_modules/
 dist/
@@ -60,3 +48,24 @@ Thumbs.db
 *.mov
 *.wmv
 
+# Auto-save and backup files
+*~
+tags
+
+# xv6 gitignores
+*~
+_*
+*.o
+*.d
+*.asm
+*.sym
+*.img
+vectors.S
+bootblock
+entryother
+initcode
+initcode.out
+kernel
+kernelmemfs
+mkfs
+.gdbinit
