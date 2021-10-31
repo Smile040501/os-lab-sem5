@@ -54,6 +54,9 @@ struct proc {
     struct file *ofile[NOFILE];  // Open files
     struct inode *cwd;           // Current directory
     char name[16];               // Process name (debugging)
+
+    // Array that keeps track of the number of times the referenced system call was invoked by this process where (index + 1) = syscall number of that system call
+    int countSyscalls[TOTAL_SYSCALLS];
 };
 
 // Process memory is laid out contiguously, low addresses first:

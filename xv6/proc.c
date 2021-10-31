@@ -107,6 +107,11 @@ found:
     memset(p->context, 0, sizeof *p->context);
     p->context->eip = (uint)forkret;
 
+    // Initializing countSyscalls array for a new process to have all the values as 0
+    for (int i = 0; i < TOTAL_SYSCALLS; ++i) {
+        p->countSyscalls[i] = 0;
+    }
+
     return p;
 }
 

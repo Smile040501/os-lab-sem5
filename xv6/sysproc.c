@@ -73,3 +73,14 @@ int sys_uptime(void) {
     release(&tickslock);
     return xticks;
 }
+
+// Returns the number of times the referenced system call was invoked by the calling process
+// Takes a valid system call number (listed in file `syscall.h`) as an argument
+int sys_getcount(void) {
+    int syscall_num;
+    // Getting the syscall argument
+    if (argint(0, &syscall_num) < 0) {
+        return -1;
+    }
+    return myproc()->countSyscalls[syscall_num - 1];
+}
