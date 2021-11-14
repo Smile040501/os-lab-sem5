@@ -86,5 +86,14 @@ int sys_getcount(void) {
 }
 
 int sys_v2paddr(void) {
-    
+    addr_t *vaddr, *paddr;
+    if(argptr(0, (void *) &paddr, sizeof(*paddr)) < 0) {
+        return -1;  // If the physical address pointer (where user wants to store the final answer) don't lie withing the process address space
+    }
+
+    if(argptr(1, (void *) &vaddr, sizeof(*vaddr)) < 0) {
+        return -1;  // If the virtual address pointer don't lie withing the process address space
+    }
+
+    return 0;
 }
