@@ -84,3 +84,7 @@ int sys_getcount(void) {
     }
     return myproc()->countSyscalls[syscall_num - 1];
 }
+
+int sys_v2paddr(void) {
+    
+}
