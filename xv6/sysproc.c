@@ -136,6 +136,6 @@ int sys_v2paddr(void) {
     // Concatencating last 12 bits of vaddr to the first 20 bits of the pte
     *paddr = PTE_ADDR(*pte) | PTE_FLAGS(vaddr);
 
-    cprintf("Virtual address converted to physical address successfully.");
+    cprintf("Virtual address converted to physical address successfully.\n");
     return 0;   // Indicated everything went well
 }
