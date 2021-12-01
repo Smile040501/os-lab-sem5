@@ -22,6 +22,7 @@
 #define SYS_close    21
 #define SYS_getcount 22
 #define SYS_v2paddr  23
+#define SYS_symlink  24
 
 // IMP: Make sure to update this number in `defs.h` file on adding new system call
-// #define TOTAL_SYSCALLS 23
+// #define TOTAL_SYSCALLS 24

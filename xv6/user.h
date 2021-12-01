@@ -25,6 +25,7 @@ int sleep(int);
 int uptime(void);
 int getcount(int);
 int v2paddr(addr_t*, addr_t*);
+int symlink(const char*, const char*);
 
 // ulib.c
 int stat(const char*, struct stat*);
