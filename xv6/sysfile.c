@@ -300,7 +300,11 @@ int sys_open(void) {
                 readi(ip, (char*)&length, lengthOffset, lengthSize);
 
                 // Reading the target string from the inode's data block
-                readi(ip, path, lengthSize, length + 1);
+                char target[length + 1];
+                for(int i = 0; i < length + 1; ++i) {
+                    readi(ip, &target[i], sizeof(int) + i, 1);
+                }
+                path = target;
 
                 iunlockput(ip);  // Releasing the lock and commiting the transaction
 
