@@ -413,8 +413,33 @@ int sys_pipe(void) {
     return 0;
 }
 
+// `symlink` syscall that takes as arguments two file paths `target` and `orig`
 int sys_symlink(void) {
-    // TODO
-    cprintf("Symlink Syscall\n");
+    char *target, *orig;  // target and orig file paths
+    struct inode *ip;     // the inode pointer
+    
+    begin_op();  // called at the starting of each FS syscall
+
+    // Getting the input arguments and creating the inode with type SYMLINK at the provided `orig` and checking for any errors in getting them
+    // If the `orig` file already exists, it will give error as with original `ln` command
+    if (argstr(0, &target) < 0 || argstr(1, &orig) < 0 || (ip = create(orig, T_SYMLINK, 0, 0)) == 0) {
+        end_op();
+        return -1;
+    }
+
+    // Writing the length of the target string to inode's data block
+    int length = strlen(target);
+    uint lengthOffset = 0, lengthSize = sizeof(int);
+    writei(ip, (char*)&length, lengthOffset, lengthSize);
+    iupdate(ip);
+
+    // Writing the target string to inode's data block
+    writei(ip, target, lengthSize, length + 1);
+    iupdate(ip);
+
+    // Unlocking the lock acquired and commiting the transaction
+    iunlockput(ip);
+
+    end_op();
     return 0;
 }
