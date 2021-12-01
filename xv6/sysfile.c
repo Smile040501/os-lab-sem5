@@ -287,6 +287,41 @@ int sys_open(void) {
             return -1;
         }
         ilock(ip);
+
+        // if the file is a symlink and we have to recursively follow it
+        if (ip->type == T_SYMLINK && !(omode & O_NOFOLLOW)) {
+            int count = 0, THRESHOLD = 10;
+            // Recursively following the symbolic link till we get a different file path
+            // Depth of the links should be less than the THRESHOLD
+            while ((ip->type == T_SYMLINK) && (count < THRESHOLD)) {
+                // Reading the length from the inode's data block
+                int length = 0;
+                uint lengthOffset = 0, lengthSize = sizeof(int);
+                readi(ip, (char*)&length, lengthOffset, lengthSize);
+
+                // Reading the target string from the inode's data block
+                readi(ip, path, lengthSize, length + 1);
+
+                iunlockput(ip);  // Releasing the lock and commiting the transaction
+
+                // Getting the inode of the path obtained and checking if it fails
+                if ((ip = namei(path)) == 0) {
+                    end_op();
+                    return -1;
+                }
+
+                ilock(ip);  // Acquiring the lock for the new ip
+                ++count;    // Incrementing the count
+            }
+
+            if (count == THRESHOLD) {   // Unsuccessfull operation
+                cprintf("Cycle found or Threshold value reached for depth of links!\n");
+                iunlockput(ip);  // Releasing the lock
+                end_op();
+                return -1;
+            }
+        }
+
         if (ip->type == T_DIR && omode != O_RDONLY) {
             iunlockput(ip);
             end_op();
